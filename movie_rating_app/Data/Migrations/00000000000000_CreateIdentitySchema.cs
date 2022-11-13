@@ -153,6 +153,84 @@ namespace movie_rating_app.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+
+            migrationBuilder.CreateTable(
+               name: "Movies",
+               columns: table => new
+               {
+                   Id = table.Column<int>(type: "int", nullable: false)
+                       .Annotation("SqlServer:Identity", "1, 1"),
+                   Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("PK_Movies", x => x.Id);
+               });
+
+
+            migrationBuilder.CreateTable(
+                name: "Favourites",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MovieId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favourites", x =>  new { x.UserId, x.MovieId });
+                    table.ForeignKey(
+                        name: "FK_Favourites_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Favourites_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MovieId = table.Column<int>(nullable: false),
+                    Rating = table.Column<int>(nullable: false),
+                    TextReview = table.Column<string>(nullable: true),
+                    RegisterTimestamp = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => new { x.UserId, x.MovieId });
+                    table.ForeignKey(
+                        name: "FK_Reviews_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                         name: "FK_Reviews_AspNetUsers_UserId",
+                         column: x => x.UserId,
+                         principalTable: "AspNetUsers",
+                         principalColumn: "Id",
+                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favourites_MovieId",
+                table: "Favourites",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_MovieId",
+                table: "Reviews",
+                column: "MovieId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
