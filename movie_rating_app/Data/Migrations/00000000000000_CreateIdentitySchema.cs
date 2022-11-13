@@ -293,6 +293,18 @@ namespace movie_rating_app.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+
+            migrationBuilder.DropTable(
+                name: "Movies");
+
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
+
+
+            migrationBuilder.DropTable(
+                name: "Favourites");
         }
     }
 }
