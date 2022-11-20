@@ -1,4 +1,4 @@
-namespace movie_rating_app.Models
+﻿namespace movie_rating_app.Models
 {
     public class ErrorViewModel
     {
