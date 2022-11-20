@@ -7,22 +7,21 @@ namespace movie_rating_app.Models
     {
         public Movie()
         {
+            Favourites = new HashSet<Favourite>();
+            MovieCreators = new HashSet<MovieCreator>();
             Reviews = new HashSet<Review>();
-            Creators = new HashSet<Creator>();
-            Users = new HashSet<AspNetUser>();
         }
 
         public int Id { get; set; }
         public string? Title { get; set; }
-        public string? Genre { get; set; }
+        public int? GenreId { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public int? Length { get; set; }
 
-        public virtual Genre? GenreNavigation { get; set; }
+        public virtual Genre? Genre { get; set; }
         public virtual MoviesCast IdNavigation { get; set; } = null!;
+        public virtual ICollection<Favourite> Favourites { get; set; }
+        public virtual ICollection<MovieCreator> MovieCreators { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
-
-        public virtual ICollection<Creator> Creators { get; set; }
-        public virtual ICollection<AspNetUser> Users { get; set; }
     }
 }

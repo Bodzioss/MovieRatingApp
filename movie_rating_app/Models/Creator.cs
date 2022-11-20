@@ -7,19 +7,18 @@ namespace movie_rating_app.Models
     {
         public Creator()
         {
-            Movies = new HashSet<Movie>();
+            MovieCreators = new HashSet<MovieCreator>();
         }
 
         public int Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Nationality { get; set; }
+        public int? NationalityId { get; set; }
         public DateTime? BirthDate { get; set; }
         public int? RoleId { get; set; }
         public string? CustomRole { get; set; }
 
-        public virtual Nationality? NationalityNavigation { get; set; }
-
-        public virtual ICollection<Movie> Movies { get; set; }
+        public virtual Nationality? Nationality { get; set; }
+        public virtual ICollection<MovieCreator> MovieCreators { get; set; }
     }
 }
