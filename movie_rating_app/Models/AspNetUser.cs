@@ -7,8 +7,11 @@ namespace movie_rating_app.Models
     {
         public AspNetUser()
         {
+            AspNetUserClaims = new HashSet<AspNetUserClaim>();
+            AspNetUserLogins = new HashSet<AspNetUserLogin>();
+            AspNetUserTokens = new HashSet<AspNetUserToken>();
+            Favourites = new HashSet<Favourite>();
             Reviews = new HashSet<Review>();
-            Movies = new HashSet<Movie>();
             Roles = new HashSet<AspNetRole>();
         }
 
@@ -29,12 +32,15 @@ namespace movie_rating_app.Models
         public int AccessFailedCount { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public string? Nationality { get; set; }
+        public int? Nationality { get; set; }
 
         public virtual Nationality? NationalityNavigation { get; set; }
+        public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual ICollection<AspNetUserToken> AspNetUserTokens { get; set; }
+        public virtual ICollection<Favourite> Favourites { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
 
-        public virtual ICollection<Movie> Movies { get; set; }
         public virtual ICollection<AspNetRole> Roles { get; set; }
     }
 }

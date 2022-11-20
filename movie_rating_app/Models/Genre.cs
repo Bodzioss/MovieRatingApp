@@ -11,6 +11,7 @@ namespace movie_rating_app.Models
         }
 
         public string Name { get; set; } = null!;
+        public int Id { get; set; }
 
         public virtual ICollection<Movie> Movies { get; set; }
     }
