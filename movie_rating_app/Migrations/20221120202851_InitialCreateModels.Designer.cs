@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using movie_rating_app.Data;
 
@@ -10,10 +11,11 @@ using movie_rating_app.Data;
 
 namespace movie_rating_app.Migrations
 {
-    [DbContext(typeof(aspnetmovie_rating_appContext))]
-    partial class aspnetmovie_rating_appContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20221120202851_InitialCreateModels")]
+    partial class InitialCreateModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +23,6 @@ namespace movie_rating_app.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("AspNetRoleAspNetUser", b =>
-                {
-                    b.Property<string>("RolesId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("AspNetRoleAspNetUser");
-                });
-
-            modelBuilder.Entity("AspNetUserMovie", b =>
-                {
-                    b.Property<int>("MoviesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("MoviesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("AspNetUserMovie");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -208,9 +180,8 @@ namespace movie_rating_app.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Nationality")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int?>("NationalityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("RoleName")
                         .HasMaxLength(256)
@@ -218,7 +189,7 @@ namespace movie_rating_app.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Nationality");
+                    b.HasIndex("NationalityId");
 
                     b.ToTable("Actors");
                 });
@@ -254,8 +225,8 @@ namespace movie_rating_app.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Nationality")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("NationalityId")
+                        .HasColumnType("int");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -297,116 +268,6 @@ namespace movie_rating_app.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("movie_rating_app.Models.AspNetRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AspNetRole");
-                });
-
-            modelBuilder.Entity("movie_rating_app.Models.AspNetRoleClaim", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaim");
-                });
-
-            modelBuilder.Entity("movie_rating_app.Models.AspNetUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Nationality")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NationalityNavigationName")
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NationalityNavigationName");
-
-                    b.ToTable("AspNetUser");
-                });
-
             modelBuilder.Entity("movie_rating_app.Models.Creator", b =>
                 {
                     b.Property<int>("Id")
@@ -416,40 +277,70 @@ namespace movie_rating_app.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("CustomRole")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Nationality")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NationalityNavigationName")
+                        .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<int?>("NationalityId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NationalityNavigationName");
+                    b.HasIndex("NationalityId");
 
                     b.ToTable("Creators");
                 });
 
+            modelBuilder.Entity("movie_rating_app.Models.Favourite", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "MovieId" }, "IX_Favourites_MovieId");
+
+                    b.ToTable("Favourites");
+                });
+
             modelBuilder.Entity("movie_rating_app.Models.Genre", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.ToTable("Genres");
                 });
@@ -460,9 +351,8 @@ namespace movie_rating_app.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Genre")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                    b.Property<int?>("GenreId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Length")
                         .HasColumnType("int");
@@ -475,21 +365,49 @@ namespace movie_rating_app.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Genre");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("movie_rating_app.Models.MoviesCast", b =>
+            modelBuilder.Entity("movie_rating_app.Models.MovieCreator", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CreatorId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatorId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("MovieCreators");
+                });
+
+            modelBuilder.Entity("movie_rating_app.Models.MoviesCast", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
 
-                    b.HasKey("MovieId", "ActorId")
-                        .HasName("PK_MoviesCast");
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ActorId");
 
@@ -501,19 +419,29 @@ namespace movie_rating_app.Migrations
 
             modelBuilder.Entity("movie_rating_app.Models.Nationality", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("Name");
+                    b.HasKey("Id");
 
                     b.ToTable("Nationalities");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.Review", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -527,57 +455,16 @@ namespace movie_rating_app.Migrations
                     b.Property<string>("TextReview")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "MovieId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex(new[] { "MovieId" }, "IX_Reviews_MovieId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("MovieCreator", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieId", "CreatorId")
-                        .HasName("PK_MovieCreators_1");
-
-                    b.HasIndex("CreatorId");
-
-                    b.ToTable("MovieCreators", (string)null);
-                });
-
-            modelBuilder.Entity("AspNetRoleAspNetUser", b =>
-                {
-                    b.HasOne("movie_rating_app.Models.AspNetRole", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("movie_rating_app.Models.AspNetUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AspNetUserMovie", b =>
-                {
-                    b.HasOne("movie_rating_app.Models.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("movie_rating_app.Models.AspNetUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -633,49 +520,41 @@ namespace movie_rating_app.Migrations
 
             modelBuilder.Entity("movie_rating_app.Models.Actor", b =>
                 {
-                    b.HasOne("movie_rating_app.Models.Nationality", "NationalityNavigation")
+                    b.HasOne("movie_rating_app.Models.Nationality", "Nationality")
                         .WithMany("Actors")
-                        .HasForeignKey("Nationality")
+                        .HasForeignKey("NationalityId")
                         .HasConstraintName("FK_Actors_Nationalities");
 
-                    b.Navigation("NationalityNavigation");
-                });
-
-            modelBuilder.Entity("movie_rating_app.Models.AspNetRoleClaim", b =>
-                {
-                    b.HasOne("movie_rating_app.Models.AspNetRole", "Role")
-                        .WithMany("AspNetRoleClaims")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("movie_rating_app.Models.AspNetUser", b =>
-                {
-                    b.HasOne("movie_rating_app.Models.Nationality", "NationalityNavigation")
-                        .WithMany("AspNetUsers")
-                        .HasForeignKey("NationalityNavigationName");
-
-                    b.Navigation("NationalityNavigation");
+                    b.Navigation("Nationality");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.Creator", b =>
                 {
-                    b.HasOne("movie_rating_app.Models.Nationality", "NationalityNavigation")
+                    b.HasOne("movie_rating_app.Models.Nationality", "Nationality")
                         .WithMany("Creators")
-                        .HasForeignKey("NationalityNavigationName");
+                        .HasForeignKey("NationalityId")
+                        .HasConstraintName("FK_Creators_Nationalities");
 
-                    b.Navigation("NationalityNavigation");
+                    b.Navigation("Nationality");
+                });
+
+            modelBuilder.Entity("movie_rating_app.Models.Favourite", b =>
+                {
+                    b.HasOne("movie_rating_app.Models.Movie", "Movie")
+                        .WithMany("Favourites")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.Movie", b =>
                 {
-                    b.HasOne("movie_rating_app.Models.Genre", "GenreNavigation")
+                    b.HasOne("movie_rating_app.Models.Genre", "Genre")
                         .WithMany("Movies")
-                        .HasForeignKey("Genre")
-                        .HasConstraintName("FK_Movies_Movies");
+                        .HasForeignKey("GenreId")
+                        .HasConstraintName("FK_Movies_GenreId");
 
                     b.HasOne("movie_rating_app.Models.MoviesCast", "IdNavigation")
                         .WithOne("Movie")
@@ -684,9 +563,28 @@ namespace movie_rating_app.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Movies_MoviesCasts");
 
-                    b.Navigation("GenreNavigation");
+                    b.Navigation("Genre");
 
                     b.Navigation("IdNavigation");
+                });
+
+            modelBuilder.Entity("movie_rating_app.Models.MovieCreator", b =>
+                {
+                    b.HasOne("movie_rating_app.Models.Creator", "Creator")
+                        .WithMany("MovieCreators")
+                        .HasForeignKey("CreatorId")
+                        .IsRequired()
+                        .HasConstraintName("FK_MovieCreators_Creators1");
+
+                    b.HasOne("movie_rating_app.Models.Movie", "Movie")
+                        .WithMany("MovieCreators")
+                        .HasForeignKey("MovieId")
+                        .IsRequired()
+                        .HasConstraintName("FK_MovieCreators_Movies1");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.MoviesCast", b =>
@@ -708,30 +606,7 @@ namespace movie_rating_app.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("movie_rating_app.Models.AspNetUser", "User")
-                        .WithMany("Reviews")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MovieCreator", b =>
-                {
-                    b.HasOne("movie_rating_app.Models.Creator", null)
-                        .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .IsRequired()
-                        .HasConstraintName("FK_MovieCreators_Creators");
-
-                    b.HasOne("movie_rating_app.Models.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MovieId")
-                        .IsRequired()
-                        .HasConstraintName("FK_MovieCreators_Movies");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.Actor", b =>
@@ -739,14 +614,9 @@ namespace movie_rating_app.Migrations
                     b.Navigation("MoviesCasts");
                 });
 
-            modelBuilder.Entity("movie_rating_app.Models.AspNetRole", b =>
+            modelBuilder.Entity("movie_rating_app.Models.Creator", b =>
                 {
-                    b.Navigation("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("movie_rating_app.Models.AspNetUser", b =>
-                {
-                    b.Navigation("Reviews");
+                    b.Navigation("MovieCreators");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.Genre", b =>
@@ -756,6 +626,10 @@ namespace movie_rating_app.Migrations
 
             modelBuilder.Entity("movie_rating_app.Models.Movie", b =>
                 {
+                    b.Navigation("Favourites");
+
+                    b.Navigation("MovieCreators");
+
                     b.Navigation("Reviews");
                 });
 
@@ -767,8 +641,6 @@ namespace movie_rating_app.Migrations
             modelBuilder.Entity("movie_rating_app.Models.Nationality", b =>
                 {
                     b.Navigation("Actors");
-
-                    b.Navigation("AspNetUsers");
 
                     b.Navigation("Creators");
                 });

@@ -10,6 +10,6 @@ namespace movie_rating_app.Models
         public int Id { get; set; }
 
         public virtual Movie Movie { get; set; } = null!;
-        public virtual AspNetUser User { get; set; } = null!;
+        public ApplicationUser User { get; set; }
     }
 }

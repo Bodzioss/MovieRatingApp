@@ -9,5 +9,7 @@ namespace movie_rating_app.Models
 
         public int? NationalityId { get; set; }
 
+        public Nationality Nationality { get; set; }
+
     }
 }
