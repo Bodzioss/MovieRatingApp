@@ -35,6 +35,8 @@ namespace movie_rating_app.Data
 
                 entity.Property(e => e.LastName).HasMaxLength(256);
 
+                entity.Property(e => e.PersonName).HasMaxLength(256);
+
                 entity.HasOne(d => d.Nationality)
                     .WithMany(p => p.Actors)
                     .HasForeignKey(d => d.NationalityId)
@@ -48,6 +50,8 @@ namespace movie_rating_app.Data
                 entity.Property(e => e.FirstName).HasMaxLength(256);
 
                 entity.Property(e => e.LastName).HasMaxLength(256);
+
+                entity.Property(e => e.PersonName).HasMaxLength(256);
 
                 entity.HasOne(d => d.Nationality)
                     .WithMany(p => p.Creators)
