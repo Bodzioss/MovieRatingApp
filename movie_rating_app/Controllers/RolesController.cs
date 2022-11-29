@@ -10,90 +10,85 @@ using movie_rating_app.Models;
 
 namespace movie_rating_app.Controllers
 {
-    public class ActorsController : Controller
+    public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ActorsController(ApplicationDbContext context)
+        public RolesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Actors
+        // GET: Roles
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Actors.Include(a => a.Nationality);
-            return View(await applicationDbContext.ToListAsync());
+              return View(await _context.Roles.ToListAsync());
         }
 
-        // GET: Actors/Details/5
+        // GET: Roles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Actors == null)
+            if (id == null || _context.Roles == null)
             {
                 return NotFound();
             }
 
-            var actor = await _context.Actors
-                .Include(a => a.Nationality)
+            var role = await _context.Roles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (actor == null)
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return View(actor);
+            return View(role);
         }
 
-        // GET: Actors/Create
+        // GET: Roles/Create
         public IActionResult Create()
         {
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id");
             return View();
         }
 
-        // POST: Actors/Create
+        // POST: Roles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,NationalityId,RoleName,BirthDate,Image")] Actor actor)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Role role)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(actor);
+                _context.Add(role);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", actor.NationalityId);
-            return View(actor);
+            return View(role);
         }
 
-        // GET: Actors/Edit/5
+        // GET: Roles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Actors == null)
+            if (id == null || _context.Roles == null)
             {
                 return NotFound();
             }
 
-            var actor = await _context.Actors.FindAsync(id);
-            if (actor == null)
+            var role = await _context.Roles.FindAsync(id);
+            if (role == null)
             {
                 return NotFound();
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", actor.NationalityId);
-            return View(actor);
+            return View(role);
         }
 
-        // POST: Actors/Edit/5
+        // POST: Roles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,NationalityId,RoleName,BirthDate,Image")] Actor actor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Role role)
         {
-            if (id != actor.Id)
+            if (id != role.Id)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace movie_rating_app.Controllers
             {
                 try
                 {
-                    _context.Update(actor);
+                    _context.Update(role);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActorExists(actor.Id))
+                    if (!RoleExists(role.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +113,49 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", actor.NationalityId);
-            return View(actor);
+            return View(role);
         }
 
-        // GET: Actors/Delete/5
+        // GET: Roles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Actors == null)
+            if (id == null || _context.Roles == null)
             {
                 return NotFound();
             }
 
-            var actor = await _context.Actors
-                .Include(a => a.Nationality)
+            var role = await _context.Roles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (actor == null)
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return View(actor);
+            return View(role);
         }
 
-        // POST: Actors/Delete/5
+        // POST: Roles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Actors == null)
+            if (_context.Roles == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Actors'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Roles'  is null.");
             }
-            var actor = await _context.Actors.FindAsync(id);
-            if (actor != null)
+            var role = await _context.Roles.FindAsync(id);
+            if (role != null)
             {
-                _context.Actors.Remove(actor);
+                _context.Roles.Remove(role);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActorExists(int id)
+        private bool RoleExists(int id)
         {
-          return _context.Actors.Any(e => e.Id == id);
+          return _context.Roles.Any(e => e.Id == id);
         }
     }
 }

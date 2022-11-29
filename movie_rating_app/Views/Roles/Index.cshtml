@@ -1,4 +1,4 @@
-﻿@model IEnumerable<movie_rating_app.Models.MovieCreator>
+﻿@model IEnumerable<movie_rating_app.Models.Role>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Creator)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Movie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th></th>
         </tr>
@@ -28,13 +22,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Creator.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role.Id)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using movie_rating_app.Data;
 
@@ -11,9 +12,10 @@ using movie_rating_app.Data;
 namespace movie_rating_app.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221123222911_AddRoles")]
+    partial class AddRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,9 +176,6 @@ namespace movie_rating_app.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -290,9 +289,6 @@ namespace movie_rating_app.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("LastName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -320,13 +316,14 @@ namespace movie_rating_app.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "MovieId" }, "IX_Favourites_MovieId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex(new[] { "UserId" }, "IX_Favourites_UserId");
+                    b.HasIndex(new[] { "MovieId" }, "IX_Favourites_MovieId");
 
                     b.ToTable("Favourites");
                 });
@@ -355,13 +352,8 @@ namespace movie_rating_app.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<int?>("GenreId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Length")
                         .HasColumnType("int");
@@ -398,11 +390,11 @@ namespace movie_rating_app.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "CreatorId" }, "IX_MovieCreators_CreatorId");
+                    b.HasIndex("CreatorId");
 
-                    b.HasIndex(new[] { "MovieId" }, "IX_MovieCreators_MovieId");
+                    b.HasIndex("MovieId");
 
-                    b.HasIndex(new[] { "RoleId" }, "IX_MovieCreators_RoleId");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("MovieCreators");
                 });
@@ -426,15 +418,12 @@ namespace movie_rating_app.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "MovieId" }, "AK_MoviesCasts_MovieId")
-                        .IsUnique();
+                    b.HasIndex("ActorId");
+
+                    b.HasIndex("RoleId");
 
                     b.HasIndex(new[] { "MovieId" }, "IX_MoviesCast")
                         .IsUnique();
-
-                    b.HasIndex(new[] { "ActorId" }, "IX_MoviesCasts_ActorId");
-
-                    b.HasIndex(new[] { "RoleId" }, "IX_MoviesCasts_RoleId");
 
                     b.ToTable("MoviesCasts");
                 });
@@ -479,18 +468,19 @@ namespace movie_rating_app.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "MovieId" }, "IX_Reviews_MovieId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex(new[] { "UserId" }, "IX_Reviews_UserId");
+                    b.HasIndex(new[] { "MovieId" }, "IX_Reviews_MovieId");
 
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("movie_rating_app.Models.Role", b =>
+            modelBuilder.Entity("movie_rating_app.Models.Roles", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -500,8 +490,7 @@ namespace movie_rating_app.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -614,7 +603,16 @@ namespace movie_rating_app.Migrations
                         .HasForeignKey("GenreId")
                         .HasConstraintName("FK_Movies_GenreId");
 
+                    b.HasOne("movie_rating_app.Models.MoviesCast", "IdNavigation")
+                        .WithOne("Movie")
+                        .HasForeignKey("movie_rating_app.Models.Movie", "Id")
+                        .HasPrincipalKey("movie_rating_app.Models.MoviesCast", "MovieId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Movies_MoviesCasts");
+
                     b.Navigation("Genre");
+
+                    b.Navigation("IdNavigation");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.MovieCreator", b =>
@@ -631,7 +629,7 @@ namespace movie_rating_app.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_MovieCreators_Movies1");
 
-                    b.HasOne("movie_rating_app.Models.Role", "Role")
+                    b.HasOne("movie_rating_app.Models.Roles", "Role")
                         .WithMany("MovieCreators")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -652,21 +650,13 @@ namespace movie_rating_app.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_MoviesCasts_Actors");
 
-                    b.HasOne("movie_rating_app.Models.Movie", "Movie")
-                        .WithMany("MoviesCast")
-                        .HasForeignKey("MovieId")
-                        .IsRequired()
-                        .HasConstraintName("FK_MoviesCasts_Movies");
-
-                    b.HasOne("movie_rating_app.Models.Role", "Role")
-                        .WithMany("MoviesCasts")
+                    b.HasOne("movie_rating_app.Models.Roles", "Role")
+                        .WithMany("MovieCasts")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Actor");
-
-                    b.Navigation("Movie");
 
                     b.Navigation("Role");
                 });
@@ -711,9 +701,12 @@ namespace movie_rating_app.Migrations
 
                     b.Navigation("MovieCreators");
 
-                    b.Navigation("MoviesCast");
-
                     b.Navigation("Reviews");
+                });
+
+            modelBuilder.Entity("movie_rating_app.Models.MoviesCast", b =>
+                {
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("movie_rating_app.Models.Nationality", b =>
@@ -723,11 +716,11 @@ namespace movie_rating_app.Migrations
                     b.Navigation("Creators");
                 });
 
-            modelBuilder.Entity("movie_rating_app.Models.Role", b =>
+            modelBuilder.Entity("movie_rating_app.Models.Roles", b =>
                 {
-                    b.Navigation("MovieCreators");
+                    b.Navigation("MovieCasts");
 
-                    b.Navigation("MoviesCasts");
+                    b.Navigation("MovieCreators");
                 });
 #pragma warning restore 612, 618
         }

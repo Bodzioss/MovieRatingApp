@@ -22,7 +22,7 @@ namespace movie_rating_app.Controllers
         // GET: MoviesCasts
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.MoviesCasts.Include(m => m.Actor);
+            var applicationDbContext = _context.MoviesCasts.Include(m => m.Actor).Include(m => m.Movie).Include(m => m.Role);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,6 +36,8 @@ namespace movie_rating_app.Controllers
 
             var moviesCast = await _context.MoviesCasts
                 .Include(m => m.Actor)
+                .Include(m => m.Movie)
+                .Include(m => m.Role)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (moviesCast == null)
             {
@@ -49,6 +51,8 @@ namespace movie_rating_app.Controllers
         public IActionResult Create()
         {
             ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Id");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
             return View();
         }
 
@@ -57,7 +61,7 @@ namespace movie_rating_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,ActorId,Id")] MoviesCast moviesCast)
+        public async Task<IActionResult> Create([Bind("Id,MovieId,ActorId,RoleId")] MoviesCast moviesCast)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +69,13 @@ namespace movie_rating_app.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var errors = ModelState
+            .Where(x => x.Value.Errors.Count > 0)
+            .Select(x => new { x.Key, x.Value.Errors })
+            .ToArray();
             ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Id", moviesCast.ActorId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", moviesCast.MovieId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", moviesCast.RoleId);
             return View(moviesCast);
         }
 
@@ -83,6 +93,8 @@ namespace movie_rating_app.Controllers
                 return NotFound();
             }
             ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Id", moviesCast.ActorId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", moviesCast.MovieId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", moviesCast.RoleId);
             return View(moviesCast);
         }
 
@@ -91,7 +103,7 @@ namespace movie_rating_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,ActorId,Id")] MoviesCast moviesCast)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MovieId,ActorId,RoleId")] MoviesCast moviesCast)
         {
             if (id != moviesCast.Id)
             {
@@ -119,6 +131,8 @@ namespace movie_rating_app.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ActorId"] = new SelectList(_context.Actors, "Id", "Id", moviesCast.ActorId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", moviesCast.MovieId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", moviesCast.RoleId);
             return View(moviesCast);
         }
 
@@ -132,6 +146,8 @@ namespace movie_rating_app.Controllers
 
             var moviesCast = await _context.MoviesCasts
                 .Include(m => m.Actor)
+                .Include(m => m.Movie)
+                .Include(m => m.Role)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (moviesCast == null)
             {
