@@ -45,8 +45,6 @@ namespace movie_rating_app.Data
             {
                 entity.Property(e => e.BirthDate).HasColumnType("date");
 
-                entity.Property(e => e.CustomRole).HasMaxLength(256);
-
                 entity.Property(e => e.FirstName).HasMaxLength(256);
 
                 entity.Property(e => e.LastName).HasMaxLength(256);

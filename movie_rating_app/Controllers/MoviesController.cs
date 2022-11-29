@@ -22,7 +22,7 @@ namespace movie_rating_app.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Movies.Include(m => m.Genre);
+            var applicationDbContext = _context.Movies.Include(m => m.Genre).Include(m => m.Nationality);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace movie_rating_app.Controllers
 
             var movie = await _context.Movies
                 .Include(m => m.Genre)
+                .Include(m => m.Nationality)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {
@@ -48,7 +49,8 @@ namespace movie_rating_app.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id");
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name");
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
             return View();
         }
 
@@ -57,7 +59,7 @@ namespace movie_rating_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,GenreId,ReleaseDate,Length,Image")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,GenreId,NationalityId,ReleaseDate,Length,Image")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +67,8 @@ namespace movie_rating_app.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", movie.GenreId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", movie.NationalityId);
             return View(movie);
         }
 
@@ -82,7 +85,8 @@ namespace movie_rating_app.Controllers
             {
                 return NotFound();
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", movie.GenreId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", movie.NationalityId);
             return View(movie);
         }
 
@@ -91,7 +95,7 @@ namespace movie_rating_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,GenreId,ReleaseDate,Length,Image")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,GenreId,NationalityId,ReleaseDate,Length,Image")] Movie movie)
         {
             if (id != movie.Id)
             {
@@ -118,7 +122,8 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id", movie.GenreId);
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Name", movie.GenreId);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", movie.NationalityId);
             return View(movie);
         }
 
@@ -132,6 +137,7 @@ namespace movie_rating_app.Controllers
 
             var movie = await _context.Movies
                 .Include(m => m.Genre)
+                .Include(m => m.Nationality)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (movie == null)
             {

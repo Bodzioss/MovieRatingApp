@@ -19,6 +19,8 @@ namespace movie_rating_app.Models
         public string? Title { get; set; }
         [DisplayName("Gatunek")]
         public int? GenreId { get; set; }
+        [DisplayName("Język")]
+        public int? NationalityId { get; set; }
         [DisplayName("Data wydania")]
         public DateTime? ReleaseDate { get; set; }
         [DisplayName("Długość filmu")]
@@ -27,6 +29,8 @@ namespace movie_rating_app.Models
         public string? Image { get; set; }
         [DisplayName("Gatunek")]
         public virtual Genre? Genre { get; set; }
+        [DisplayName("Język")]
+        public virtual Nationality? Nationality { get; set; }
         public virtual ICollection<MoviesCast> MoviesCast { get; set; }
         public virtual ICollection<Favourite> Favourites { get; set; }
         public virtual ICollection<MovieCreator> MovieCreators { get; set; }

@@ -19,8 +19,6 @@ namespace movie_rating_app.Models
         [DisplayName("Data urodzenia")]
         public DateTime? BirthDate { get; set; }
         [DisplayName("Rola")]
-        public string? CustomRole { get; set; }
-        [DisplayName("Ścieżka do pliku")]
         public string? Image { get; set; }
         [DisplayName("Kraj pochodzenia")]
         public virtual Nationality? Nationality { get; set; }
