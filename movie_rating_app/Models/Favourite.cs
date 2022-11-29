@@ -11,8 +11,9 @@ namespace movie_rating_app.Models
         [DisplayName("Film")]
         public int MovieId { get; set; }
         public int Id { get; set; }
-
+        [DisplayName("Film")]
         public virtual Movie Movie { get; set; } = null!;
+        [DisplayName("Użytkownik")]
         public ApplicationUser User { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace movie_rating_app.Models
         public string? CustomRole { get; set; }
         [DisplayName("Ścieżka do pliku")]
         public string? Image { get; set; }
-
+        [DisplayName("Kraj pochodzenia")]
         public virtual Nationality? Nationality { get; set; }
         public virtual ICollection<MovieCreator> MovieCreators { get; set; }
     }

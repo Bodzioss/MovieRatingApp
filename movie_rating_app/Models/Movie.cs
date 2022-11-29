@@ -25,7 +25,7 @@ namespace movie_rating_app.Models
         public int? Length { get; set; }
         [DisplayName("Ścieżka do zdjęcia")]
         public string? Image { get; set; }
-
+        [DisplayName("Gatunek")]
         public virtual Genre? Genre { get; set; }
         public virtual ICollection<MoviesCast> MoviesCast { get; set; }
         public virtual ICollection<Favourite> Favourites { get; set; }
