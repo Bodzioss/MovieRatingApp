@@ -50,7 +50,7 @@ namespace movie_rating_app.Controllers
         public IActionResult Create()
         {
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace movie_rating_app.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", favourite.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", favourite.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", favourite.UserId);
             return View(favourite);
         }
 
@@ -86,7 +86,7 @@ namespace movie_rating_app.Controllers
                 return NotFound();
             }
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", favourite.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", favourite.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", favourite.UserId);
             return View(favourite);
         }
 
@@ -123,7 +123,7 @@ namespace movie_rating_app.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", favourite.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", favourite.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", favourite.UserId);
             return View(favourite);
         }
 

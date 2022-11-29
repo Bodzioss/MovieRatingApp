@@ -50,9 +50,9 @@ namespace movie_rating_app.Controllers
         // GET: MovieCreators/Create
         public IActionResult Create()
         {
-            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "Id");
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id");
+            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "FirstName");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
             return View();
         }
 
@@ -69,9 +69,9 @@ namespace movie_rating_app.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "Id", movieCreator.CreatorId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieCreator.MovieId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", movieCreator.RoleId);
+            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "FirstName", movieCreator.CreatorId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieCreator.MovieId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", movieCreator.RoleId);
             return View(movieCreator);
         }
 
@@ -88,9 +88,9 @@ namespace movie_rating_app.Controllers
             {
                 return NotFound();
             }
-            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "Id", movieCreator.CreatorId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieCreator.MovieId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", movieCreator.RoleId);
+            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "FirstName", movieCreator.CreatorId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieCreator.MovieId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", movieCreator.RoleId);
             return View(movieCreator);
         }
 
@@ -126,9 +126,9 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "Id", movieCreator.CreatorId);
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", movieCreator.MovieId);
-            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Id", movieCreator.RoleId);
+            ViewData["CreatorId"] = new SelectList(_context.Creators, "Id", "FirstName", movieCreator.CreatorId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", movieCreator.MovieId);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", movieCreator.RoleId);
             return View(movieCreator);
         }
 
