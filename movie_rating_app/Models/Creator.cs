@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 
 namespace movie_rating_app.Models
 {
@@ -11,11 +10,17 @@ namespace movie_rating_app.Models
         }
 
         public int Id { get; set; }
+        [DisplayName("Imię")]
         public string? FirstName { get; set; }
+        [DisplayName("Nazwisko")]
         public string? LastName { get; set; }
+        [DisplayName("Kraj pochodzenia")]
         public int? NationalityId { get; set; }
+        [DisplayName("Data urodzenia")]
         public DateTime? BirthDate { get; set; }
+        [DisplayName("Rola")]
         public string? CustomRole { get; set; }
+        [DisplayName("Ścieżka do pliku")]
         public string? Image { get; set; }
 
         public virtual Nationality? Nationality { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace movie_rating_app.Models
 {
@@ -12,6 +13,7 @@ namespace movie_rating_app.Models
             Creators = new HashSet<Creator>();
         }
 
+        [DisplayName("Kraj")]
         public string Name { get; set; } = null!;
         public int Id { get; set; }
 

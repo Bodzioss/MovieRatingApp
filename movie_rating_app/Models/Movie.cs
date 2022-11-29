@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace movie_rating_app.Models
 {
@@ -14,10 +15,15 @@ namespace movie_rating_app.Models
         }
 
         public int Id { get; set; }
+        [DisplayName("Tytuł")]
         public string? Title { get; set; }
+        [DisplayName("Gatunek")]
         public int? GenreId { get; set; }
+        [DisplayName("Data wydania")]
         public DateTime? ReleaseDate { get; set; }
+        [DisplayName("Długość filmu")]
         public int? Length { get; set; }
+        [DisplayName("Ścieżka do zdjęcia")]
         public string? Image { get; set; }
 
         public virtual Genre? Genre { get; set; }
