@@ -21,6 +21,7 @@ namespace movie_rating_app.Data
         public virtual DbSet<MoviesCast> MoviesCasts { get; set; } = null!;
         public virtual DbSet<Nationality> Nationalities { get; set; } = null!;
         public virtual DbSet<Review> Reviews { get; set; } = null!;
+        public virtual DbSet<Role> Roles { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,15 +63,11 @@ namespace movie_rating_app.Data
             {
                 entity.HasIndex(e => e.MovieId, "IX_Favourites_MovieId");
 
-                entity.Property(e => e.UserId).HasMaxLength(450);
+                entity.HasIndex(e => e.UserId, "IX_Favourites_UserId");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.Favourites)
                     .HasForeignKey(d => d.MovieId);
-
-     /*           entity.HasOne(d => d.User)
-                    .WithMany(p => p.Favourites)
-                    .HasForeignKey(d => d.UserId);*/
             });
 
             modelBuilder.Entity<Genre>(entity =>
@@ -86,17 +83,16 @@ namespace movie_rating_app.Data
                     .WithMany(p => p.Movies)
                     .HasForeignKey(d => d.GenreId)
                     .HasConstraintName("FK_Movies_GenreId");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.Movie)
-                    .HasPrincipalKey<MoviesCast>(p => p.MovieId)
-                    .HasForeignKey<Movie>(d => d.Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Movies_MoviesCasts");
             });
 
             modelBuilder.Entity<MovieCreator>(entity =>
             {
+                entity.HasIndex(e => e.CreatorId, "IX_MovieCreators_CreatorId");
+
+                entity.HasIndex(e => e.MovieId, "IX_MovieCreators_MovieId");
+
+                entity.HasIndex(e => e.RoleId, "IX_MovieCreators_RoleId");
+
                 entity.HasOne(d => d.Creator)
                     .WithMany(p => p.MovieCreators)
                     .HasForeignKey(d => d.CreatorId)
@@ -108,18 +104,39 @@ namespace movie_rating_app.Data
                     .HasForeignKey(d => d.MovieId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieCreators_Movies1");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.MovieCreators)
+                    .HasForeignKey(d => d.RoleId);
             });
 
             modelBuilder.Entity<MoviesCast>(entity =>
             {
+                entity.HasIndex(e => e.MovieId, "AK_MoviesCasts_MovieId")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.MovieId, "IX_MoviesCast")
                     .IsUnique();
+
+                entity.HasIndex(e => e.ActorId, "IX_MoviesCasts_ActorId");
+
+                entity.HasIndex(e => e.RoleId, "IX_MoviesCasts_RoleId");
 
                 entity.HasOne(d => d.Actor)
                     .WithMany(p => p.MoviesCasts)
                     .HasForeignKey(d => d.ActorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MoviesCasts_Actors");
+
+              entity.HasOne(d => d.Movie)
+                    .WithMany(p => p.MoviesCast)
+                    .HasForeignKey(d => d.MovieId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_MoviesCasts_Movies");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.MoviesCasts)
+                    .HasForeignKey(d => d.RoleId);
             });
 
             modelBuilder.Entity<Nationality>(entity =>
@@ -127,22 +144,24 @@ namespace movie_rating_app.Data
                 entity.Property(e => e.Name).HasMaxLength(256);
             });
 
+
             modelBuilder.Entity<Review>(entity =>
             {
                 entity.HasIndex(e => e.MovieId, "IX_Reviews_MovieId");
 
-                entity.Property(e => e.UserId).HasMaxLength(450);
+                entity.HasIndex(e => e.UserId, "IX_Reviews_UserId");
 
                 entity.HasOne(d => d.Movie)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.MovieId);
 
-  /*              entity.HasOne(d => d.User)
-                    .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.UserId);*/
             });
 
-            
+            modelBuilder.Entity<Role>(entity =>
+            {
+                entity.Property(e => e.Name).HasMaxLength(256);
+            });
+
         }
     }
 }

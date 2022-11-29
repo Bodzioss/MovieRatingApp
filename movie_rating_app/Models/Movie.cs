@@ -10,6 +10,7 @@ namespace movie_rating_app.Models
             Favourites = new HashSet<Favourite>();
             MovieCreators = new HashSet<MovieCreator>();
             Reviews = new HashSet<Review>();
+            MoviesCast = new HashSet<MoviesCast>();
         }
 
         public int Id { get; set; }
@@ -17,9 +18,10 @@ namespace movie_rating_app.Models
         public int? GenreId { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public int? Length { get; set; }
+        public string? Image { get; set; }
 
         public virtual Genre? Genre { get; set; }
-        public virtual MoviesCast IdNavigation { get; set; } = null!;
+        public virtual ICollection<MoviesCast> MoviesCast { get; set; }
         public virtual ICollection<Favourite> Favourites { get; set; }
         public virtual ICollection<MovieCreator> MovieCreators { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

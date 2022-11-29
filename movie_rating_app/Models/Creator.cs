@@ -15,8 +15,8 @@ namespace movie_rating_app.Models
         public string? LastName { get; set; }
         public int? NationalityId { get; set; }
         public DateTime? BirthDate { get; set; }
-        public int? RoleId { get; set; }
         public string? CustomRole { get; set; }
+        public string? Image { get; set; }
 
         public virtual Nationality? Nationality { get; set; }
         public virtual ICollection<MovieCreator> MovieCreators { get; set; }
