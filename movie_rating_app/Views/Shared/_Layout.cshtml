@@ -17,41 +17,41 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between position-absolute top-50 start-50 translate-middle">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="Index">Actors</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="Index">Aktorzy</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Creators" asp-action="Index">Creators</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Creators" asp-action="Index">Twórcy</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Genres</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Genres" asp-action="Index">Gatunki filmowe</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Movies</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">Filmy</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MoviesCasts" asp-action="Index">MoviesCasts</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MoviesCasts" asp-action="Index">Obsada filmu</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MovieCreators" asp-action="Index">MovieCreators</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MovieCreators" asp-action="Index">Twórcy filmu</a>
                         </li>
                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Nationalities" asp-action="Index">Nationalities</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Nationalities" asp-action="Index">Kraje/Języki</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reviews" asp-action="Index">Reviews</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reviews" asp-action="Index">Opinie</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Role</a>
                         </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
+                    </ul>  
                 </div>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
