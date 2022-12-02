@@ -1,0 +1,22 @@
+﻿@model movie_rating_app.Models.Movie
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="container-fluid" style="display:flex;margin-top:5em">
+    <div class="img-fluid">
+        <img src="@Html.DisplayFor(model => model.Image)" style="width:25em;height:auto;"/>
+    </div>
+    <div style="margin-left:8em">
+        <h1>@Html.DisplayFor(model => model.Title)</h1>
+        <h3 style="text-align:justify;text-justify: inter-word;">@Html.DisplayFor(model => model.Description)</h3>
+        <h4>Movie length: @Html.DisplayFor(model => model.Length)</h4>
+        <h4>Release date: @Html.DisplayFor(model => model.ReleaseDate)</h4>
+        <h4>Genre: @Html.DisplayFor(model => model.Genre.Name)</h4>
+        <h4>Language: @Html.DisplayFor(model => model.Nationality.Name)</h4>
+    </div>
+
+</div>
+

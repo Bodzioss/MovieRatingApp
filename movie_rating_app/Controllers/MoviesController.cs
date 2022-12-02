@@ -60,6 +60,26 @@ namespace movie_rating_app.Controllers
             return View(movie);
         }
 
+        // GET: Movies/NewDetails/5
+        public async Task<IActionResult> NewDetails(int? id)
+        {
+            if (id == null || _context.Movies == null)
+            {
+                return NotFound();
+            }
+
+            var movie = await _context.Movies
+                .Include(m => m.Genre)
+                .Include(m => m.Nationality)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return View(movie);
+        }
+
         // GET: Movies/Create
         public IActionResult Create()
         {
