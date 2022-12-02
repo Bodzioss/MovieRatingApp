@@ -28,13 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Actor.Id)
+                @Html.DisplayFor(modelItem => item.Actor.PersonName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Movie.Id)
+                @Html.DisplayFor(modelItem => item.Movie.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Role.Id)
+                @Html.DisplayFor(modelItem => item.Role.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

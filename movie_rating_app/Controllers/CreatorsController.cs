@@ -48,7 +48,7 @@ namespace movie_rating_app.Controllers
         // GET: Creators/Create
         public IActionResult Create()
         {
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id");
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace movie_rating_app.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", creator.NationalityId);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", creator.NationalityId);
             return View(creator);
         }
 
@@ -82,7 +82,7 @@ namespace movie_rating_app.Controllers
             {
                 return NotFound();
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", creator.NationalityId);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", creator.NationalityId);
             return View(creator);
         }
 
@@ -118,7 +118,7 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", creator.NationalityId);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", creator.NationalityId);
             return View(creator);
         }
 

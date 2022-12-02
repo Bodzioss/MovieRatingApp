@@ -26,6 +26,13 @@ namespace movie_rating_app.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: TopMovies
+        public async Task<IActionResult> TopMovies()
+        {
+            var applicationDbContext = _context.Movies.Include(m => m.Genre).Include(m => m.Nationality);
+            return View(await applicationDbContext.ToListAsync());
+        }
+
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,7 +66,7 @@ namespace movie_rating_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,GenreId,NationalityId,ReleaseDate,Length,Image")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,GenreId,NationalityId,ReleaseDate,Length,Image")] Movie movie)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +102,7 @@ namespace movie_rating_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,GenreId,NationalityId,ReleaseDate,Length,Image")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,GenreId,NationalityId,ReleaseDate,Length,Image")] Movie movie)
         {
             if (id != movie.Id)
             {

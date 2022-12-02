@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.RegisterTimestamp)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Movie.Id)
+                @Html.DisplayFor(modelItem => item.Movie.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @Html.DisplayFor(modelItem => item.User.PersonName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
