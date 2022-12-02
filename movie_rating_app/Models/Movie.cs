@@ -25,6 +25,7 @@ namespace movie_rating_app.Models
         [DisplayName("Język")]
         public int? NationalityId { get; set; }
         [DisplayName("Data wydania")]
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? ReleaseDate { get; set; }
         [DisplayName("Długość filmu")]

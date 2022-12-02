@@ -1,0 +1,46 @@
+﻿@model IEnumerable<movie_rating_app.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<style>
+    #row:hover{
+        box-shadow : -1px 9px 40px -12px #808080;
+    }
+</style>
+
+<div class="container">
+@foreach (var item in Model) {
+       <div id="row" style="display: flex;width:100%;margin-bottom:1em;padding:1em">
+                    <img src="@Html.DisplayFor(modelItem => item.Image)" style="width:9em;height:auto"/>
+
+                    <div style="display:block;margin-left:3em;align-items:start;width:80%">
+                        <div>
+                            <h2>@Html.DisplayFor(modelItem => item.Title)</h2>
+                        </div>
+                        <div>
+                            @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        </div>
+                        <div>
+                            <img src="@("/image/flags/" + @item.Nationality.Name + ".png")"/>
+                            @Html.DisplayFor(modelItem => item.Nationality.Name)
+                        </div>
+                        <div>
+                             @Html.DisplayFor(modelItem => item.Length)
+                        </div>
+                     </div>
+                    <div class="align-content-end align-items-center" style="display:block;width:10em;vertical-align:middle;text-align:end">
+                        <div style="display:flex">
+                            10.0
+                        </div>
+                        <div style="display:flex">
+                            128 opinion
+                        </div>
+                    </div>
+        </div>
+}
+</div>
+
