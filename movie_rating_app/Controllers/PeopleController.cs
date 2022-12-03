@@ -10,90 +10,90 @@ using movie_rating_app.Models;
 
 namespace movie_rating_app.Controllers
 {
-    public class CreatorsController : Controller
+    public class PeopleController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CreatorsController(ApplicationDbContext context)
+        public PeopleController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Creators
+        // GET: People
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Creators.Include(c => c.Nationality);
+            var applicationDbContext = _context.People.Include(p => p.Nationality);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Creators/Details/5
+        // GET: People/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Creators == null)
+            if (id == null || _context.People == null)
             {
                 return NotFound();
             }
 
-            var creator = await _context.Creators
-                .Include(c => c.Nationality)
+            var person = await _context.People
+                .Include(p => p.Nationality)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (creator == null)
+            if (person == null)
             {
                 return NotFound();
             }
 
-            return View(creator);
+            return View(person);
         }
 
-        // GET: Creators/Create
+        // GET: People/Create
         public IActionResult Create()
         {
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name");
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id");
             return View();
         }
 
-        // POST: Creators/Create
+        // POST: People/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PersonName,NationalityId,BirthDate,Image")] Creator creator)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PersonName,NationalityId,BirthDate,Image")] Person person)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(creator);
+                _context.Add(person);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", creator.NationalityId);
-            return View(creator);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", person.NationalityId);
+            return View(person);
         }
 
-        // GET: Creators/Edit/5
+        // GET: People/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Creators == null)
+            if (id == null || _context.People == null)
             {
                 return NotFound();
             }
 
-            var creator = await _context.Creators.FindAsync(id);
-            if (creator == null)
+            var person = await _context.People.FindAsync(id);
+            if (person == null)
             {
                 return NotFound();
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", creator.NationalityId);
-            return View(creator);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", person.NationalityId);
+            return View(person);
         }
 
-        // POST: Creators/Edit/5
+        // POST: People/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PersonName,NationalityId,BirthDate,Image")] Creator creator)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,PersonName,NationalityId,BirthDate,Image")] Person person)
         {
-            if (id != creator.Id)
+            if (id != person.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace movie_rating_app.Controllers
             {
                 try
                 {
-                    _context.Update(creator);
+                    _context.Update(person);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CreatorExists(creator.Id))
+                    if (!PersonExists(person.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +118,51 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Name", creator.NationalityId);
-            return View(creator);
+            ViewData["NationalityId"] = new SelectList(_context.Nationalities, "Id", "Id", person.NationalityId);
+            return View(person);
         }
 
-        // GET: Creators/Delete/5
+        // GET: People/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Creators == null)
+            if (id == null || _context.People == null)
             {
                 return NotFound();
             }
 
-            var creator = await _context.Creators
-                .Include(c => c.Nationality)
+            var person = await _context.People
+                .Include(p => p.Nationality)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (creator == null)
+            if (person == null)
             {
                 return NotFound();
             }
 
-            return View(creator);
+            return View(person);
         }
 
-        // POST: Creators/Delete/5
+        // POST: People/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Creators == null)
+            if (_context.People == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Creators'  is null.");
             }
-            var creator = await _context.Creators.FindAsync(id);
-            if (creator != null)
+            var person = await _context.People.FindAsync(id);
+            if (person != null)
             {
-                _context.Creators.Remove(creator);
+                _context.People.Remove(person);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CreatorExists(int id)
+        private bool PersonExists(int id)
         {
-          return _context.Creators.Any(e => e.Id == id);
+          return _context.People.Any(e => e.Id == id);
         }
     }
 }

@@ -12,13 +12,11 @@ namespace movie_rating_app.Data
         {
         }
 
-        public virtual DbSet<Actor> Actors { get; set; } = null!;
-        public virtual DbSet<Creator> Creators { get; set; } = null!;
+        public virtual DbSet<Person> People { get; set; } = null!;
         public virtual DbSet<Favourite> Favourites { get; set; } = null!;
         public virtual DbSet<Genre> Genres { get; set; } = null!;
         public virtual DbSet<Movie> Movies { get; set; } = null!;
-        public virtual DbSet<MovieCreator> MovieCreators { get; set; } = null!;
-        public virtual DbSet<MoviesCast> MoviesCasts { get; set; } = null!;
+        public virtual DbSet<MoviePerson> MoviePeople { get; set; } = null!;
         public virtual DbSet<Nationality> Nationalities { get; set; } = null!;
         public virtual DbSet<Review> Reviews { get; set; } = null!;
         public virtual DbSet<Role> Roles { get; set; } = null!;
@@ -27,7 +25,7 @@ namespace movie_rating_app.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Actor>(entity =>
+            modelBuilder.Entity<Person>(entity =>
             {
                 entity.Property(e => e.BirthDate).HasColumnType("date");
 
@@ -38,23 +36,7 @@ namespace movie_rating_app.Data
                 entity.Property(e => e.PersonName).HasMaxLength(256);
 
                 entity.HasOne(d => d.Nationality)
-                    .WithMany(p => p.Actors)
-                    .HasForeignKey(d => d.NationalityId)
-                    .HasConstraintName("FK_Actors_Nationalities");
-            });
-
-            modelBuilder.Entity<Creator>(entity =>
-            {
-                entity.Property(e => e.BirthDate).HasColumnType("date");
-
-                entity.Property(e => e.FirstName).HasMaxLength(256);
-
-                entity.Property(e => e.LastName).HasMaxLength(256);
-
-                entity.Property(e => e.PersonName).HasMaxLength(256);
-
-                entity.HasOne(d => d.Nationality)
-                    .WithMany(p => p.Creators)
+                    .WithMany(p => p.People)
                     .HasForeignKey(d => d.NationalityId)
                     .HasConstraintName("FK_Creators_Nationalities");
             });
@@ -85,59 +67,31 @@ namespace movie_rating_app.Data
                     .HasConstraintName("FK_Movies_GenreId");
             });
 
-            modelBuilder.Entity<MovieCreator>(entity =>
+            modelBuilder.Entity<MoviePerson>(entity =>
             {
-                entity.HasIndex(e => e.CreatorId, "IX_MovieCreators_CreatorId");
+                entity.HasIndex(e => e.PersonId, "IX_MovieCreators_CreatorId");
 
                 entity.HasIndex(e => e.MovieId, "IX_MovieCreators_MovieId");
 
                 entity.HasIndex(e => e.RoleId, "IX_MovieCreators_RoleId");
 
-                entity.HasOne(d => d.Creator)
-                    .WithMany(p => p.MovieCreators)
-                    .HasForeignKey(d => d.CreatorId)
+                entity.HasOne(d => d.Person)
+                    .WithMany(p => p.MoviePeople)
+                    .HasForeignKey(d => d.PersonId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieCreators_Creators1");
 
                 entity.HasOne(d => d.Movie)
-                    .WithMany(p => p.MovieCreators)
+                    .WithMany(p => p.MoviePeople)
                     .HasForeignKey(d => d.MovieId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_MovieCreators_Movies1");
 
                 entity.HasOne(d => d.Role)
-                    .WithMany(p => p.MovieCreators)
+                    .WithMany(p => p.MoviePeople)
                     .HasForeignKey(d => d.RoleId);
             });
 
-            modelBuilder.Entity<MoviesCast>(entity =>
-            {
-                entity.HasIndex(e => e.MovieId, "AK_MoviesCasts_MovieId")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.MovieId, "IX_MoviesCast")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.ActorId, "IX_MoviesCasts_ActorId");
-
-                entity.HasIndex(e => e.RoleId, "IX_MoviesCasts_RoleId");
-
-                entity.HasOne(d => d.Actor)
-                    .WithMany(p => p.MoviesCasts)
-                    .HasForeignKey(d => d.ActorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MoviesCasts_Actors");
-
-              entity.HasOne(d => d.Movie)
-                    .WithMany(p => p.MoviesCast)
-                    .HasForeignKey(d => d.MovieId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MoviesCasts_Movies");
-
-                entity.HasOne(d => d.Role)
-                    .WithMany(p => p.MoviesCasts)
-                    .HasForeignKey(d => d.RoleId);
-            });
 
             modelBuilder.Entity<Nationality>(entity =>
             {

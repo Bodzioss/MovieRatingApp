@@ -2,11 +2,11 @@
 
 namespace movie_rating_app.Models
 {
-    public partial class Creator
+    public partial class Person
     {
-        public Creator()
+        public Person()
         {
-            MovieCreators = new HashSet<MovieCreator>();
+            MoviePeople = new HashSet<MoviePerson>();
         }
 
         public int Id { get; set; }
@@ -24,6 +24,6 @@ namespace movie_rating_app.Models
         public string? Image { get; set; }
         [DisplayName("Kraj pochodzenia")]
         public virtual Nationality? Nationality { get; set; }
-        public virtual ICollection<MovieCreator> MovieCreators { get; set; }
+        public virtual ICollection<MoviePerson> MoviePeople { get; set; }
     }
 }
