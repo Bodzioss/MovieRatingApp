@@ -71,7 +71,10 @@ namespace movie_rating_app.Controllers
             var movie = await _context.Movies
                 .Include(m => m.Genre)
                 .Include(m => m.Nationality)
+                .Include(m=> m.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
+
             if (movie == null)
             {
                 return NotFound();
