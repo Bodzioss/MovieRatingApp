@@ -36,7 +36,7 @@ namespace movie_rating_app.Controllers
         // GET: AllMovies
         public async Task<IActionResult> AllMovies()
         {
-            var applicationDbContext = _context.Movies.Include(m => m.Genre).Include(m => m.Nationality);
+            var applicationDbContext = _context.Movies.Include(m => m.Genre).Include(m => m.Nationality).Include(m=>m.Reviews);
             return View(await applicationDbContext.ToListAsync());
         }
 

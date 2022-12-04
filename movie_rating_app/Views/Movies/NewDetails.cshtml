@@ -4,6 +4,14 @@
     ViewData["Title"] = "Details";
 }
 
+<style>
+    #myReview{
+        box-shadow : -1px 9px 40px -12px #808080;
+        padding : 1em;
+        border-radius: 25px;
+    }
+</style>
+
 <div class="container">
     <div class="block" style="display:block">
         <div class="container-fluid" style="display:flex;margin-top:5em;">
@@ -22,30 +30,54 @@
         </div>
 
         <h1 class="text-center" style="margin-top:1em">Reviews</h1>
+        <p class="text-center">
+            <a asp-action="Create">Create New</a>
+        </p>
 
         <div class="container" style="display:block; padding:2em;overflow: auto;">
+             <div id="myReview" style="overflow: auto;margin-bottom:5em">
+                <div style="display:block;float: left;width: 20%;">
+                    <div>
+                        <h1>5</h1>
+                     </div>
+                     <div>
+                    @for(int i = 0; i < 5; i++)
+                    {
+                        <img src="@("/image/utils/star.png")" style="width:1em;height:auto"/>
+                    }
+                     </div>
+                </div>
+                <div class="align-content-end" style="display:block;width:80%;text-align:end;position:relative;overflow-wrap: break-word;float:right;min-height:5em">
+                     <div style="margin-bottom:2em;">
+                        <h4>Moja opinia</h4>
+                     </div>
+                     <div style="position: absolute;bottom: 0;right:0;margin-top:4em">
+                        03.12.2022 11:07:00 Marcin Bogdański
+                     </div>
+                </div>
+            </div>
         @foreach (var item in Model.Reviews) {
-            <div class="container border-primary" style="overflow: auto;height:10em;margin-bottom:5em;">
-            <div style="display:block;float: left;width: 20%;">
-                <div>
-                    <h1>@Html.DisplayFor(modelItem => item.Rating)</h1>
-                 </div>
-                 <div>
-                @for(int i = 0; i < item.Rating; i++)
-                {
-                    <img src="@("/image/utils/star.png")" style="width:1em;height:auto"/>
-                }
-                 </div>
-            </div>
-            <div class="align-content-end" style="display:block;width:80%;text-align:end;position:relative;overflow-wrap: break-word;float:right;height:100%">
-                 <div>
-                    <h4>@Html.DisplayFor(modelItem => item.TextReview)dsfafasdfafsdfasdfdsfafasdfafsdfasdfdsfafasdfafsdfasdfdsfafasdfafsdfasdfdsfafasdfafsdfasdfdsfafasdfafsdfasdf</h4>
-                 </div>
-                 <div style="position: absolute;bottom: 0;right:0;margin-top:2em">
-                    @Html.DisplayFor(modelItem => item.RegisterTimestamp)
-                    @Html.DisplayFor(modelItem => item.User.PersonName)
-                 </div>
-            </div>
+            <div class="container border-primary" style="overflow: auto;margin-bottom:5em;">
+                <div style="display:block;float: left;width: 20%;">
+                    <div>
+                        <h1>@Html.DisplayFor(modelItem => item.Rating)</h1>
+                     </div>
+                     <div>
+                    @for(int i = 0; i < item.Rating; i++)
+                    {
+                        <img src="@("/image/utils/star.png")" style="width:1em;height:auto"/>
+                    }
+                     </div>
+                </div>
+                <div class="align-content-end" style="display:block;width:80%;text-align:end;position:relative;overflow-wrap: break-word;float:right;min-height:5em">
+                     <div style="margin-bottom:2em;">
+                        <h4>@Html.DisplayFor(modelItem => item.TextReview)</h4>
+                     </div>
+                     <div style="position: absolute;bottom: 0;right:0;margin-top:4em">
+                        @Html.DisplayFor(modelItem => item.RegisterTimestamp)
+                        @Html.DisplayFor(modelItem => item.User.PersonName)
+                     </div>
+                </div>
             </div>
         }
         </div>
