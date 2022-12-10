@@ -41,7 +41,7 @@ namespace movie_rating_app.Controllers
         }
 
         // GET: Movies/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details11(int? id)
         {
             if (id == null || _context.Movies == null)
             {
@@ -61,7 +61,7 @@ namespace movie_rating_app.Controllers
         }
 
         // GET: Movies/NewDetails/5
-        public async Task<IActionResult> NewDetails(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Movies == null)
             {
