@@ -49,8 +49,8 @@ namespace movie_rating_app.Controllers
         // GET: Reviews/Create
         public IActionResult Create()
         {
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName");
             return View();
         }
 
@@ -67,8 +67,11 @@ namespace movie_rating_app.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", review.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", review.UserId);
+            var errors = ModelState.Select(x => x.Value.Errors)
+                       .Where(y => y.Count > 0)
+                       .ToList();
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", review.MovieId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName", review.UserId);
             return View(review);
         }
 
@@ -85,8 +88,8 @@ namespace movie_rating_app.Controllers
             {
                 return NotFound();
             }
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", review.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", review.UserId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", review.MovieId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName", review.UserId);
             return View(review);
         }
 
@@ -122,8 +125,8 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", review.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", review.UserId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", review.MovieId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName", review.UserId);
             return View(review);
         }
 

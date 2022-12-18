@@ -49,8 +49,8 @@ namespace movie_rating_app.Controllers
         // GET: Favourites/Create
         public IActionResult Create()
         {
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace movie_rating_app.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", favourite.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", favourite.UserId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", favourite.MovieId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName", favourite.UserId);
             return View(favourite);
         }
 
@@ -85,8 +85,8 @@ namespace movie_rating_app.Controllers
             {
                 return NotFound();
             }
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", favourite.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", favourite.UserId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", favourite.MovieId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName", favourite.UserId);
             return View(favourite);
         }
 
@@ -122,8 +122,8 @@ namespace movie_rating_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Id", favourite.MovieId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", favourite.UserId);
+            ViewData["MovieId"] = new SelectList(_context.Movies, "Id", "Title", favourite.MovieId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "PersonName", favourite.UserId);
             return View(favourite);
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace movie_rating_app.Models
 {
@@ -7,14 +8,13 @@ namespace movie_rating_app.Models
     {
         public Role()
         {
-            MovieCreators = new HashSet<MovieCreator>();
-            MoviesCasts = new HashSet<MoviesCast>();
+            MoviePeople = new HashSet<MoviePerson>();
         }
 
         public int Id { get; set; }
+        [DisplayName("Rola")]
         public string Name { get; set; } = null!;
 
-        public virtual ICollection<MovieCreator> MovieCreators { get; set; }
-        public virtual ICollection<MoviesCast> MoviesCasts { get; set; }
+        public virtual ICollection<MoviePerson> MoviePeople { get; set; }
     }
 }

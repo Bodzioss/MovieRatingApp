@@ -1,0 +1,32 @@
+﻿@model IEnumerable<movie_rating_app.Models.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    .card:hover{
+        box-shadow : -1px 9px 40px -12px #808080;
+    }
+</style>
+
+
+<div class="text-center">
+    <h1 class="display-5">Top 10 Movies All Time</h1>
+</div>
+<div class="row">
+    @foreach (var item in Model) 
+    {
+    <div class="card align-items-center" style="width:18em;margin:10px;height:45em">
+        <img src="@Html.DisplayFor(model => item.Image)" style="width:14em; height:20em;margin-top:2em"/>
+        <div class="card-body">
+            <div class="card-title" style="height:6em">
+                <h2>@Html.DisplayFor(model => item.Title)</h2>
+            </div>
+            <div class="card-textab-content">
+                <p style="text-align:justify;text-justify: inter-word;">@Html.DisplayFor(model => item.Description)</p>
+            </div>
+        </div>
+    </div>
+    }
+</div>
